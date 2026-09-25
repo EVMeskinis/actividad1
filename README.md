@@ -3,7 +3,7 @@
 **Taller de Lenguajes (Python) – Segundo Semestre 2026 – FCE UNLP**
 
 - **Nombre:** Egle Victoria Meskinis
-- **Legajo:** COMPLETAR
+- **Legajo:** 18197/0
 
 ## Estructura del proyecto
 
@@ -14,10 +14,8 @@
 ├── actividad1.ipynb      ← se ejecuta desde acá
 └── src/
     ├── __init__.py
-    ├── datos.py          ← configuración: COLUMNAS y ROLES
+    ├── datos.py          ← COLUMNAS y ROLES
     └── informe.py        ← lógica: armar, filtrar, ordenar, mostrar
 ```
 
-## Cómo ejecutar
 
-Abrir `actividad1.ipynb` desde la carpeta raíz del proyecto y ejecutar todas las celdas.

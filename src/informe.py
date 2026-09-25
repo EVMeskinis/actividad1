@@ -67,7 +67,8 @@ def ordenar_filas(filas, criterio="completitud", orden="B"):
         orden = "B"
 
     posicion = 0 if criterio == "nombre" else 2   # índice dentro de la tupla
-    return sorted(filas, key=lambda fila: fila[posicion], reverse=(orden == "B"))
+    descendente = orden == "B"
+    return sorted(filas, key=lambda fila: fila[posicion], reverse=descendente)
 
 
 def generar_informe(rol=None, roles=ROLES, columnas=COLUMNAS):
@@ -75,8 +76,8 @@ def generar_informe(rol=None, roles=ROLES, columnas=COLUMNAS):
     Genera el informe de columnas para un rol.
 
     Args:
-        rol (str | None): nombre del rol. Si es None, se informan TODAS las
-            columnas ordenadas por completitud descendente.
+        rol (str | None): nombre del rol. Si es None, se informan TODAS
+            las columnas ordenadas por completitud descendente.
         roles (dict): configuración de los roles.
         columnas (dict): datos de las columnas.
 
@@ -94,8 +95,9 @@ def generar_informe(rol=None, roles=ROLES, columnas=COLUMNAS):
 
     config = roles[rol]
     filas = armar_filas(config["columnas"], columnas)
-    filas = filtrar_por_completitud(filas, config.get("minimo", 0))  # 1º filtra
-    return ordenar_filas(filas, config["criterio"], config["orden"])  # 2º ordena
+    # Primero se filtra y después se ordena: así se ordenan menos elementos.
+    filas = filtrar_por_completitud(filas, config.get("minimo", 0))
+    return ordenar_filas(filas, config["criterio"], config["orden"])
 
 
 def mostrar_informe(filas, titulo="Informe de columnas"):

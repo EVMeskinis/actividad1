@@ -1,5 +1,5 @@
 """
-Lógica del informe: arma, filtra y ordena columnas según un rol.
+Lógica del informe.py: arma, filtra y ordena columnas según un rol.
 
 Las funciones reciben la configuración por parámetro (con valores por
 defecto tomados de datos.py), así se pueden probar con otros datos.
@@ -12,12 +12,10 @@ def armar_filas(nombres, columnas=COLUMNAS):
     """
     Convierte una lista de nombres de columnas en una lista de tuplas
     (nombre, tipo, completitud).
-
-    Args:
+    Parámetros:
         nombres (list): nombres de las columnas que se quieren informar.
         columnas (dict): diccionario con los datos de cada columna.
-
-    Returns:
+    Retorna:
         list: tuplas (nombre, tipo, completitud). Los nombres que no existen
         en `columnas` se descartan (filter) y se avisa por pantalla.
     """
@@ -35,12 +33,10 @@ def armar_filas(nombres, columnas=COLUMNAS):
 def filtrar_por_completitud(filas, minimo=0):
     """
     Deja solo las filas cuyo % de completitud es mayor o igual a `minimo`.
-
-    Args:
+    Parámetros:
         filas (list): tuplas (nombre, tipo, completitud).
         minimo (float): umbral mínimo. Por defecto 0 (no filtra nada).
-
-    Returns:
+    Retorna:
         list: filas que cumplen el umbral.
     """
     return list(filter(lambda fila: fila[2] >= minimo, filas))
@@ -49,13 +45,11 @@ def filtrar_por_completitud(filas, minimo=0):
 def ordenar_filas(filas, criterio="completitud", orden="B"):
     """
     Ordena las filas por nombre o por completitud.
-
-    Args:
+    Parámetros:
         filas (list): tuplas (nombre, tipo, completitud).
         criterio (str): "nombre" o "completitud". Por defecto "completitud".
         orden (str): "A" ascendente o "B" descendente. Por defecto "B".
-
-    Returns:
+    Retorna:
         list: nueva lista ordenada. Si el criterio o el orden no son válidos,
         avisa y usa los valores por defecto para que el programa no falle.
     """
@@ -74,14 +68,12 @@ def ordenar_filas(filas, criterio="completitud", orden="B"):
 def generar_informe(rol=None, roles=ROLES, columnas=COLUMNAS):
     """
     Genera el informe de columnas para un rol.
-
-    Args:
+    Parámetros:
         rol (str | None): nombre del rol. Si es None, se informan TODAS
             las columnas ordenadas por completitud descendente.
         roles (dict): configuración de los roles.
         columnas (dict): datos de las columnas.
-
-    Returns:
+    Retorna:
         list: tuplas (nombre, tipo, completitud) filtradas y ordenadas.
         Lista vacía si el rol no existe.
     """
@@ -104,7 +96,7 @@ def mostrar_informe(filas, titulo="Informe de columnas"):
     """
     Imprime el informe como una tabla de texto.
 
-    Args:
+    Parámetros:
         filas (list): tuplas (nombre, tipo, completitud).
         titulo (str): título que se muestra arriba de la tabla.
     """

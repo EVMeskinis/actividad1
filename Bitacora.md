@@ -161,16 +161,25 @@ Además:
 
 ## Modificaciones del examen
 
-### Modificación 1
+### Modificación 1: rol gestor_politicas
 
-- **Qué pedía:**
-- **Qué cambié y dónde:**
-- **Por qué así:**
-- **Caso de prueba:**
+- **Qué pedía:** agregar un rol `gestor_politicas` que vea REGION, AGLOMERADO, MAS_500, ITF y GDECCFR, ordenado por completitud descendente y sin umbral.
+- **Qué cambié y dónde:** agregué el rol en `ROLES`, dentro de `datos.py`. No toqué `informe.py`.
+- **Por qué así:** las funciones de `informe.py` tratan a todos los roles por igual, así que un rol nuevo funciona sin modificarlas. No incluí `"minimo"` porque `generar_informe` usa `config.get("minimo", 0)`: si el rol no tiene mínimo, usa 0 y no filtra nada. Cargué las columnas en el orden del enunciado, porque REGION y AGLOMERADO empatan en 100 y `sorted` respeta el orden de la lista.
+- **Caso de prueba:** en el notebook, el informe del rol mostró REGION, AGLOMERADO, MAS_500, ITF y GDECCFR, en ese orden y sin filtrar, tal como había predicho antes de ejecutar.
 
-### Modificación 2
+### Modificación 2: columna NIVEL_ED
 
-- **Qué pedía:**
-- **Qué cambié y dónde:**
-- **Por qué así:**
-- **Caso de prueba:**
+- **Qué pedía:** agregar la columna NIVEL_ED (int, 88 % de completitud) sin tocar los roles, e indicar en qué informes aparece y por qué.
+- **Qué cambié y dónde:** agregué `"NIVEL_ED": {"tipo": "int", "completitud": 88.0}` en `COLUMNAS`, dentro de `datos.py`.
+- **Por qué aparece solo sin rol:** sin rol, `generar_informe` toma todas las columnas con `list(columnas.keys())`, por eso la columna nueva aparece automáticamente. Los roles tienen su propia lista de columnas escrita a mano, y NIVEL_ED no está en ninguna. Para que un rol la vea, habría que agregarla a su lista.
+- **Caso de prueba:** en el informe sin rol apareció NIVEL_ED con 88,0 %, entre MAS_500 e ITF; en los cuatro roles no apareció.
+- **Qué no funcionó:** la primera vez NIVEL_ED no aparecía. Me di cuenta de que Python seguía usando la versión anterior de `datos.py`: tuve que guardar el archivo y reiniciar el kernel antes de ejecutar todo.
+
+### Modificación 3: uso de filter() y map()
+
+- **Qué pedía:** explicar las ventajas de `filter()`/`map()` frente a un `for`, si los había usado.
+- **Dónde los usé:** en `armar_filas`, `filter()` descarta las columnas inexistentes y `map()` convierte cada nombre en una tupla; en `filtrar_por_completitud`, `filter()` se queda con las filas que llegan al mínimo.
+- **Ventajas frente al for:** el código dice qué hace y no cómo recorrer la lista; no necesita una lista vacía ni `append`, así que hay menos variables auxiliares y menos errores; no crea listas intermedias; y cada función hace una sola tarea, lo que facilita modificarla.
+- **Caso de prueba:** `filtrar_por_completitud(filas, 80)` dejó afuera CAT_OCUP y GDECCFR.
+

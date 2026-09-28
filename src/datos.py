@@ -14,6 +14,7 @@ COLUMNAS = {
     "ITF": {"tipo": "int", "completitud": 82.6},
     "MAS_500": {"tipo": "str", "completitud": 97.1},
     "GDECCFR": {"tipo": "int", "completitud": 76.4},
+    "NIVEL_ED": {"tipo": "int", "completitud": 88.0},
 }
 # ---------------------------------------------------------------------------
 # 2) ROLES: diccionario cuya CLAVE es el nombre del rol.
@@ -42,6 +43,11 @@ ROLES = {
         "orden": "A",
         "minimo": 50,
     },
+    "gestor_politicas": {
+        "columnas": ["REGION", "AGLOMERADO", "MAS_500", "ITF", "GDECCFR"],
+        "criterio": "completitud",
+        "orden": "B",
+     },
 }
 
 # Valores permitidos (sirven para validar la configuración de los roles)
